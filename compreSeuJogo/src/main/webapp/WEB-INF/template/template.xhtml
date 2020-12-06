@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<title><ui:insert name="tituloJanela" /></title>
+		<h:outputStylesheet library="resources/css" name="face.css" />
+		<h:outputStylesheet name="primeicons/primeicons.css"
+			library="primefaces" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="shortcut icon" type="image/x-icon"
+			href="#{resource['imagem/logoTe.png']}" />
+		<style>
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	background: black;
+}
+</style>
+	</h:head>
+	<h:body>
+		<div id="cabecalho">
+			<h:panelGroup rendered="#{UsePessoaBean.logadoAdm == true}">
+				<ui:include src="/WEB-INF/template/MenuAdministrador.xhtml" />
+			</h:panelGroup>
+			<h:panelGroup
+				rendered="#{UsePessoaBean.logadoCliente == true and UsePessoaBean.logadoVendedor == true}">
+				<ui:include src="/WEB-INF/template/menuVenda.xhtml" />
+			</h:panelGroup>
+			<h:panelGroup
+				rendered="#{UsePessoaBean.logadoCliente == true and UsePessoaBean.logadoVendedor == false}">
+				<ui:include src="/WEB-INF/template/MenuCliente.xhtml" />
+			</h:panelGroup>
+			<h:panelGroup
+				rendered="#{UsePessoaBean.logadoVendedor == true and UsePessoaBean.logadoCliente == false}">
+				<ui:include src="/WEB-INF/template/menuVendedor.xhtml" />
+			</h:panelGroup>
+			<h:panelGroup
+				rendered="#{UsePessoaBean.logadoAdm == false and UsePessoaBean.logadoCliente == false and UsePessoaBean.logadoVendedor == false}">
+				<ui:include src="/WEB-INF/template/MenuSite.xhtml" />
+			</h:panelGroup>
+		</div>
+		<div id="conteudo"
+			style="min-height: 500px; margin-bottom: 0px; background: #696969;">
+			<ui:insert name="conteudo">
+			</ui:insert>
+		</div>
+		<div id="footer" style="margin-top: 0px;">
+			<ui:include src="/WEB-INF/template/footerPagina.xhtml" />
+		</div>
+	</h:body>
+</f:view>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/WEB-INF/template/template.xhtml">
+	<ui:define name="tituloJanela">Dados Plataforma</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="form1">
+			<p:growl id="messages" idautoUpdate="true" life="3000" />
+			<h:inputHidden value="#{plataformaBean.plataforma.id}" />
+			<div id="main" align="center">
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="showcase-text-align-center">
+					<p:outputLabel value="Nome" for="nome" />
+					<p:inputText id="nome" value="#{plataformaBean.plataforma.nome}"
+						placeholder="Digite o nome da plataforma" />
+					<p:outputLabel value="Sigla SKU" for="sku" />
+					<p:inputText id="sku"
+						value="#{plataformaBean.plataforma.codigoSku}"
+						placeholder="Digite a sigla do sku" />
+					<p:outputLabel value="Ativo" for="ativo"/>
+					<p:selectBooleanCheckbox id="ativo" value="#{plataformaBean.plataforma.ativo}" />	
+				</p:panelGrid>
+				<p:commandButton value="Salvar" action="#{plataformaBean.salvar()}"
+					update="@form" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

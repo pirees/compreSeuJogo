@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+</h:head>
+<ui:composition template="/WEB-INF/template/template.xhtml">
+	<ui:define name="tituloJanela">Pedidos</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="form">
+			<p:growl id="msg" autoUpdate="true" life="3000" />
+			
+				
+				<p:dataTable id="tableProduto" var="venda"
+					value="#{vendaBean.carregarVendas()}"
+					frame="box" rules="all" widgetVar="vendas" cellpadding="3"
+					paginator="true"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} 
+					{NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+					paginatorPosition="bottom"
+					rowsPerPageTemplate="15,30,45">
+					<p:column headerText="Número do pedido" filterBy="#{venda.id}"
+						filterMatchMode="contains">
+						<h:outputText value="#{venda.id}" />
+					</p:column>
+					<p:column headerText="Cliente" filterBy="#{venda.cliente.nome}"
+						filterMatchMode="contains">
+						<h:outputText value="#{venda.cliente.nome}" />
+					</p:column>
+					<p:column headerText="Data" filterBy="#{venda.dataCadastro}"
+						filterMatchMode="contains">
+						<h:outputText value="#{venda.dataCadastro}" />
+					</p:column>
+					<p:column headerText="Transporte"
+						filterBy="#{venda.transporte.nome}" filterMatchMode="contains">
+						<h:panelGroup rendered="#{venda.transporte != null}">
+							<h:outputText value="#{venda.transporte.nome}" />
+						</h:panelGroup>
+						<h:panelGroup rendered="#{venda.transporte == null}">
+							<h:outputText value="Retirado na loja" />
+						</h:panelGroup>
+					</p:column>
+					<p:column headerText="Valor" filterBy="#{venda.valor}"
+						filterMatchMode="contains">
+						<h:outputText value="#{venda.valor}" />
+					</p:column>
+					<p:column headerText="Entregue" filterBy="#{venda.entrega}"
+						filterMatchMode="equals">
+						<f:facet name="filter">
+							<p:selectOneButton onchange="PF('vendas').filter()"
+								styleClass="custom-filter">
+								<f:converter converterId="javax.faces.Boolean" />
+								<f:selectItem itemLabel="Sim" itemValue="true" />
+								<f:selectItem itemLabel="Não" itemValue="false" />
+							</p:selectOneButton>
+						</f:facet>
+						<h:outputText value="#{venda.entrega== true ? 'Sim' : 'Não'}" />
+					</p:column>
+					<p:column headerText="Pedido">
+						<p:commandButton action="#{vendaBean.selecionar(venda)}"
+							value="Ver" />
+					</p:column>
+				</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+</h:head>
+<ui:composition template="/WEB-INF/template/template.xhtml">
+	<ui:define name="tituloJanela">Vendedores</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="form">
+			<p:breadCrumb>
+				<p:menuitem value="Início" url="#" icon="pi pi-home" />
+				<p:menuitem value="Vendedores" url="#" />
+				<p:menuitem url="cadastroVendedor.xhtml?faces-redirect=true"
+					title="Adicionar" icon="pi pi-plus" />
+			</p:breadCrumb>
+			<p:dataTable var="vendedor" value="#{vendedorBean.lista}" frame="box"
+				rules="all" widgetVar="vendedorTable" cellpadding="3" paginator="true"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} 
+				{NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="15,30,45">
+				<p:column headerText="Nome" filterBy="#{vendedor.nome}"
+					filterMatchMode="contains">
+					<h:outputText value="#{vendedor.nome}" />
+				</p:column>
+				<p:column headerText="Sobrenome"
+					filterBy="#{vendedor.sobrenome}" filterMatchMode="contains">
+					<h:outputText value="#{vendedor.sobrenome}" />
+				</p:column>
+				<p:column headerText="CPF" filterBy="#{vendedor.cpf}"
+					filterMatchMode="contains">
+					<h:outputText value="#{vendedor.cpf}" />
+				</p:column>
+				<p:column headerText="Telefone" filterBy="#{vendedor.telefone}"
+					filterMatchMode="contains">
+					<h:outputText value="#{vendedor.telefone}" />
+				</p:column>
+				<p:column headerText="Ativo" filterBy="#{vendedor.ativo}"
+					filterMatchMode="equals">
+					<f:facet name="filter">
+						<p:selectOneButton onchange="PF('vendedorTable').filter()"
+							styleClass="custom-filter">
+							<f:converter converterId="javax.faces.Boolean" />
+							<f:selectItem itemLabel="+" itemValue="true" />
+							<f:selectItem itemLabel="-" itemValue="false" />
+						</p:selectOneButton>
+					</f:facet>
+					<h:outputText
+						value="#{vendedor.ativo == true ? 'Ativo' : 'Desativado'}" />
+				</p:column>
+				<p:column headerText="Alterar">
+					<p:commandButton
+						action="#{vendedorBean.alterar(vendedor)}"
+						value="Alterar" />
+				</p:column>
+				<p:column headerText="Excluir">
+					<p:commandButton
+						action="#{vendedorBean.excluir(vendedor)}"
+						onclick="if (!confirm('Confirma a exclusão do vendedor?')) return false"
+						value="Excluir" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

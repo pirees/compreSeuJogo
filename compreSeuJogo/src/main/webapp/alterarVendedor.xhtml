@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/WEB-INF/template/template.xhtml">
+	<ui:define name="tituloJanela">Alterar vendedor</ui:define>
+	<ui:define name="conteudo">
+		<p:panel header="CADASTRO DE VENDEDORES">
+			<h:form id="form1">
+				<p:growl id="msgs" autoUpdate="true" life="3000" />
+				<div align="center">
+					<p:panel header="Dados Pessoais">
+						<h2 align="center">Alterar Vendedor</h2>
+						<h:panelGrid id = "teste" columns="4" cellpadding="8" style="margin:100px">
+
+							<p:outputLabel value="Nome" />
+							<p:inputText id="nome" value="#{vendedorBean.vendedor.nome}"
+								required="true" requiredMessage="O campo nome é obrigatório" />
+
+							<p:outputLabel value="Sobrenome" />
+							<p:inputText id="sobrenome"
+								value="#{vendedorBean.vendedor.sobrenome}" required="true"
+								requiredMessage="O campo sobrenome é obrigatório" />
+
+							<p:outputLabel value="CPF" />
+							<p:inputMask id="cpf" value="#{vendedorBean.vendedor.cpf}"
+								mask="999.999.999-99" required="true"
+								requiredMessage="O campo CPF é obrigatório" />
+
+							<p:outputLabel value="Telefone" />
+							<p:inputMask id="telefone"
+								value="#{vendedorBean.vendedor.telefone}" mask="(99)99999-9999"
+								required="true" requiredMessage="O campo telefone é obrigatório" />
+
+							<p:outputLabel value="Data de Nascimento" />
+							<p:calendar id="mask"
+								value="#{vendedorBean.vendedor.dataNascimento}"
+								pattern="dd-MM-yyyy" mask="true" required="true"
+								requiredMessage="O campo data de nascimento é obrigatório" />
+
+							<p:outputLabel value="CEP" />
+							<p:inputMask id="cep" value="#{vendedorBean.vendedor.cep}"
+								mask="99999-999" required="true"
+								requiredMessage="O campo CEP é obrigatório" />
+
+							<p:outputLabel for="address" value="Endereço" />
+							<p:inputText id="address" rows="1"
+								value="#{vendedorBean.vendedor.endereco}" required="true"
+								requiredMessage="O campo endereço é obrigatório" />
+
+							<p:outputLabel for="city" value="Cidade" />
+							<p:inputText id="city" value="#{vendedorBean.vendedor.cidade}"
+								required="true" requiredMessage="O campo cidade é obrigatório" />
+
+							<p:outputLabel for="bairro" value="Bairro" />
+							<p:inputText id="bairro" value="#{vendedorBean.vendedor.bairro}"
+								required="true" requiredMessage="O campo bairro é obrigatório" />
+
+							<p:outputLabel for="state" value="Estado" />
+							<p:selectOneMenu id="state"
+								value="#{vendedorBean.vendedor.estado}" unselectable="true">
+								<f:selectItem itemLabel="---------" />
+								<f:selectItems value="#{vendedorBean.estado}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="email" value="Email" />
+							<p:inputText id="email" value="#{vendedorBean.vendedor.email}"
+								required="true" requiredMessage="O campo e-mail é obrigatório" />
+
+
+							<p:outputLabel value="Sexo" />
+							<p:selectOneMenu id="console"
+								value="#{vendedorBean.vendedor.sexo}" unselectable="true">
+								<f:selectItem itemLabel="-------" />
+								<f:selectItems value="#{vendedorBean.sexo}" />
+							</p:selectOneMenu>
+							
+							<p:selectBooleanCheckbox value="#{vendedorBean.vendedor.ativo}" itemLabel="Ativo"/>
+							
+							<p:dialog header="Values" modal="true" resizable="false" showEffect="fade" widgetVar="dlg">
+        						<h:panelGrid columns="1" id="display">
+            						<h:outputText value="Value 1: #{vendedorBean.vendedor.ativo}" />
+        						</h:panelGrid>
+    						</p:dialog>
+
+
+							<p:commandButton value="Salvar" id="salvar"
+								action="#{vendedorBean.atualizarStauts}"	
+								update="@form"/>
+
+						</h:panelGrid>
+					</p:panel>
+				</div>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

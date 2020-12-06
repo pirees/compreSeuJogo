@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	  
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Compre Seu Jogo - Funcionário</title>
+
+</h:head>
+<h:body>
+	<div align="center">
+		<h1>Cadastro de funcionário</h1>
+		<h:form>
+
+     		<h3>Nome</h3>
+     		<span class="ui-float-label">
+       		<p:inputText id="nome" value="#{vendedorBean.vendedor.nome}" />
+   			</span>
+			<h3>Sobrenome</h3>
+     		<span class="ui-float-label">
+       		<p:inputText id="sobrenome" value="#{vendedorBean.vendedor.sobrenome}" />
+   			</span>
+   			<h3>CPF</h3>
+     		<span class="ui-float-label">
+       		 <p:inputMask id="cpf" value="#{vendedorBean.vendedor.cpf}" mask="999.999.999-99"/>
+   			</span>
+   			<h3>CEP</h3>
+     		<span class="ui-float-label">
+       		<p:inputMask id="cep" value="#{vendedorBean.vendedor.cep}" mask="99999-999"/>
+   			</span>
+   			<div class="col-md-2">
+   			<p:commandButton value="Buscar" id="buscar" action="#{vendedorBean.buscacep}"/>
+   			</div>
+			<h3>Endereço</h3>
+     		<span class="ui-float-label">
+       		<p:inputText id="endereco" value="#{vendedorBean.vendedor.endereco}" />
+   			</span>
+   			<h3>Cidade</h3>
+     		<span class="ui-float-label">
+       		<p:inputText id="cidade" value="#{vendedorBean.vendedor.cidade}" />
+   			</span>
+   			<h3>Estado</h3>
+     		<span class="ui-float-label">
+       		<p:inputText id="estado" value="#{vendedorBean.vendedor.estado}" />
+   			</span>
+   			<h3>Telefone</h3>
+     		<span class="ui-float-label">
+       		<p:inputMask id="telefone" value="#{vendedorBean.vendedor.telefone}" mask="(99)99999-9999" />
+   			</span>
+   			<h3>E-mail</h3>
+     		<span class="ui-float-label">
+       		<p:inputText id="email" value="#{vendedorBean.vendedor.email}" />
+   			</span>
+   			<h3>Senha</h3>
+        	<p:password id="pwd1" value="#{vendedorBean.vendedor.senha}" label="Password 1" required="true" />	
+        	
+        	<h3>Data de Nascimento</h3>
+        	 <p:calendar id="mask" value="#{vendedorBean.vendedor.dataNascimento}" pattern="dd-MM-yyyy" mask="true" />
+   			
+   			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+        		<h3>Ativo</h3>
+        		<p:selectOneRadio id="console" value="#{vendedorBean.vendedor.ativo}" unselectable="true">
+            		<f:selectItem itemLabel="Sim" itemValue="true" />
+            		<f:selectItem itemLabel="Não" itemValue="false" />
+        	</p:selectOneRadio>
+    		</h:panelGrid>
+
+        	<p:commandButton value="Salvar" id="salvar" action="#{vendedorBean.salvar}" style="margin-right:20px;"/>
+        	        	
+		</h:form>
+	</div>
+</h:body>
+
+</html>

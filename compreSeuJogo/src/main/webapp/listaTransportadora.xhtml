@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+</h:head>
+<ui:composition template="/WEB-INF/template/template.xhtml">
+	<ui:define name="tituloJanela">Transportadoras</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="form">
+			<p:breadCrumb>
+				<p:menuitem value="Início" url="#" icon="pi pi-home" />
+				<p:menuitem value="Transportadoras"
+					url="listaTransportadora.xhtml?faces-redirect=true" />
+				<p:menuitem url="cadastroTransportadora.xhtml?faces-redirect=true"
+					title="Adicionar" icon="pi pi-plus" />
+			</p:breadCrumb>
+			<p:dataTable var="transporte" value="#{transporteBean.lista}"
+				frame="box" rules="all" widgetVar="transporteTable" cellpadding="3"
+				paginator="true"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} 
+				{NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="15,30,45">
+				<p:column headerText="Nome" filterBy="#{transporte.nome}"
+					filterMatchMode="contains">
+					<h:outputText value="#{transporte.nome}" />
+				</p:column>
+				<p:column headerText="E-mail" filterBy="#{transporte.email}"
+					filterMatchMode="contains">
+					<h:outputText value="#{transporte.email}" />
+				</p:column>
+				<p:column headerText="CNPJ" filterBy="#{transporte.cnpj}"
+					filterMatchMode="contains">
+					<h:outputText value="#{transporte.cnpj}" />
+				</p:column>
+				<p:column headerText="Telefone" filterBy="#{transporte.telefone}"
+					filterMatchMode="contains">
+					<h:outputText value="#{transporte.telefone}" />
+				</p:column>
+				<p:column headerText="Entrega" filterBy="#{transporte.dataEntrega}"
+					filterMatchMode="contains">
+					<h:outputText value="#{transporte.dataEntrega}" />
+				</p:column>
+				<p:column headerText="Ativo" filterBy="#{transporte.ativo}"
+					filterMatchMode="equals">
+					<f:facet name="filter">
+						<p:selectOneButton onchange="PF('transporteTable').filter()"
+							styleClass="custom-filter">
+							<f:converter converterId="javax.faces.Boolean" />
+							<f:selectItem itemLabel="+" itemValue="true" />
+							<f:selectItem itemLabel="-" itemValue="false" />
+						</p:selectOneButton>
+					</f:facet>
+					<h:outputText
+						value="#{transporte.ativo == true ? 'Ativo' : 'Desativado'}" />
+				</p:column>
+				<p:column headerText="Alterar">
+					<p:commandButton action="#{transporteBean.alterar(transporte)}"
+						value="Alterar" />
+				</p:column>
+				<p:column headerText="Excluir">
+					<p:commandButton
+						onclick="PF('wdialog').show();"
+						value="Excluir" />
+					<p:dialog id="dialog" widgetVar="wdialog" header="Aviso" modal="true" appendTo="@(body)" hideEffect="explode">
+						<p:rating style="padding-left:78px;"
+							value="#{produtoBean.produto.nota}"/>
+						<p:commandButton value="Ok" icon="ui-icon-check" onclick="PF('wdialog').hide();"/>
+					</p:dialog>
+					
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

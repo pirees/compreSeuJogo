@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+</h:head>
+<ui:composition template="/WEB-INF/template/template.xhtml">
+	<ui:define name="tituloJanela">Todos Administradores</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="form">
+			<p:breadCrumb>
+				<p:menuitem value="Início" url="#" icon="pi pi-home" />
+				<p:menuitem value="Administradores"
+					url="listaAdministrador.xhtml?faces-redirect=true" />
+				<p:menuitem url="cadastroAdministrador.xhtml?faces-redirect=true"
+					title="Adicionar" icon="pi pi-plus" />
+			</p:breadCrumb>
+			<p:dataTable var="administrador" value="#{administradorBean.lista}"
+				frame="box" rules="all" cellpadding="3" widgetVar="admTable"
+				paginator="true"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} 
+				{NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="15,30,45">
+				<p:column headerText="Nome" filterBy="#{administrador.nome}"
+					filterMatchMode="contains">
+					<h:outputText value="#{administrador.nome}" />
+				</p:column>
+				<p:column headerText="Sobrenome"
+					filterBy="#{administrador.sobrenome}" filterMatchMode="contains">
+					<h:outputText value="#{administrador.sobrenome}" />
+				</p:column>
+				<p:column headerText="CPF" filterBy="#{administrador.cpf}"
+					filterMatchMode="contains">
+					<h:outputText value="#{administrador.cpf}" />
+				</p:column>
+				<p:column headerText="Telefone" filterBy="#{administrador.telefone}"
+					filterMatchMode="contains">
+					<h:outputText value="#{administrador.telefone}" />
+				</p:column>
+				<p:column headerText="Ativo" filterBy="#{administrador.ativo}"
+					filterMatchMode="equals">
+					<f:facet name="filter">
+						<p:selectOneButton onchange="PF('admTable').filter()"
+							styleClass="custom-filter">
+							<f:converter converterId="javax.faces.Boolean" />
+							<f:selectItem itemLabel="+" itemValue="true" />
+							<f:selectItem itemLabel="-" itemValue="false" />
+						</p:selectOneButton>
+					</f:facet>
+					<h:outputText
+						value="#{administrador.ativo == true ? 'Ativo' : 'Desativado'}" />
+				</p:column>
+				<p:column headerText="Alterar">
+					<p:commandButton
+						action="#{administradorBean.alterar(administrador)}"
+						value="Alterar" />
+				</p:column>
+				<p:column headerText="Excluir">
+					<p:commandButton
+						action="#{administradorBean.excluir(administrador)}"
+						onclick="if (!confirm('Confirma a exclusão do administrador?')) return false"
+						value="Excluir" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,95 @@
+@charset "UTF-8";
+
+#header {
+	padding: 200px, 10px !important
+}
+
+.box, .sample-layout>div {
+	background-color: #cce4f7;
+	text-align: center;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	border-radius: 4px;
+}
+
+.box-stretched {
+	height: 100%;
+}
+
+.sample-layout {
+	margin: 0;
+	text-align: left;
+}
+
+.sample-layout>div {
+	border: 1px solid #ffffff;
+}
+
+.vertical-container {
+	margin: 0;
+	height: 200px;
+	background: #efefef;
+	border-radius: 4px;
+}
+
+.nested-grid .p-col-4 {
+	padding-bottom: 1em;
+}
+
+
+
+.dimensao {
+	
+}
+
+.fonteLogin {
+	padding: 20px;
+	font-size: 1.6em;
+}
+
+.menu {
+	position: fixed;
+}
+
+.login {
+	width: 600px;
+	height: 100px;
+	text-align: center;
+}
+
+h2 {
+	align: center !important;
+	color: black;
+}
+
+.centro {
+	align: center;
+	background: black;
+}
+
+.displayed {
+	display: block;
+	margin-left: auto;
+	margin-right: auto
+}
+
+.ui-dataview-list .ui-dataview-row {
+	border-bottom: 1px solid #A8A8A8;
+	padding: 25px 10px;
+	/* with the exported variables from Nova and Luna Themes*/
+	border-bottom-color: var(- -input-border-color, #A8A8A8);
+}
+
+.image {
+	width: 75px;
+	height: 75px;
+}
+
+.logo {
+	width: 5%;
+}
+
+.detail {
+	width: 85%;
+	padding-left: 25px;
+}

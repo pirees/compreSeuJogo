@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<h:outputStylesheet library="css" name="face.css" />
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+	<title>Site de jogos</title>
+</h:head>
+<h:body>
+	<ui:composition>
+		<div id="header" style="padding: 200px, 10px">
+			<h:form>
+				<p:growl id="messages" />
+				<p:panelGrid columns="3" layout="grid">
+					<p:column>
+						<h:commandLink action="index.xhtml?faces-redirect=true">
+							<p:graphicImage style="width: 75px;height:75px;" library="imagem"
+								name="logoTe.png" />
+							<p:outputLabel style="padding: 20px 25px;font-size:1.6em;"
+								value="COMPRE SEU JOGO" />
+						</h:commandLink>
+					</p:column>
+					<p:column>
+						<div style="padding-top: 20px">
+							<p:inputText size="32" style="margin:1px 10px 1px 1px;"
+								value="#{produtoBean.filtro}" placeholder="Procurar" />
+							<p:commandButton action="#{produtoBean.telaPesquisa()}"
+								icon="pi pi-search">
+								<f:ajax execute="@this" render="@all" />
+							</p:commandButton>
+						</div>
+					</p:column>
+					<p:column>
+						<p:commandLink style="float:right;padding: 20px 25px;"
+							action="cadastroClienteSite.xhtml?faces-redirect=true"
+							value="Criar minha conta" />
+						<p:commandLink style="float:right;padding: 20px 25px;"
+							action="login.xhtml?faces-redirect=true" value="Login" />
+					</p:column>
+				</p:panelGrid>
+				<p:menubar>
+					<p:submenu label="PLAYSTATION">
+						<p:menuitem rendered="" value="Categoria" />
+						<p:separator />
+						<p:menuitem value="PLAYSTATION 5" immediate="true"
+							action="#{produtoBean.telaPesquisaPlay()}" />
+						<p:separator />
+						<p:menuitem value="PLAYSTATION 4" immediate="true"
+							action="#{produtoBean.telaPesquisaPlay4()}" />
+						<p:separator />
+						<p:menuitem value="PLAYSTATION 3" immediate="true"
+							action="#{produtoBean.telaPesquisaPlay3()}" />
+						<p:separator />
+					</p:submenu>
+					<p:submenu label="XBOX">
+						<p:menuitem value="XBOX ONE" immediate="true"
+							action="#{produtoBean.telaPesquisaXBoxOne()}" />
+						<p:separator />
+						<p:menuitem value="XBOX 360" immediate="true"
+							action="#{produtoBean.telaPesquisaXBox360()}" />
+					</p:submenu>
+					<p:submenu label="NINTENDO">
+						<p:menuitem value="JOGOS" immediate="true"
+							action="#{produtoBean.telaPesquisaNintendo()}" />
+					</p:submenu>
+				</p:menubar>
+			</h:form>
+		</div>
+	</ui:composition>
+</h:body>
+</html>

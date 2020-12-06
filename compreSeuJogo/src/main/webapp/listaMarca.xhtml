@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/WEB-INF/template/template.xhtml">
+	<ui:define name="tituloJanela">Marcas</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="form1">
+			<p:growl id="msgs" showDetail="false" showSummary="true" />
+			<p:breadCrumb>
+				<p:menuitem value="Início" url="#" icon="pi pi-home" />
+				<p:menuitem value="Marcas" url="listaMarca.xhtml?faces-redirect=true" />
+				<p:menuitem url="cadastroMarca.xhtml?faces-redirect=true"
+					title="Adicionar" icon="pi pi-plus" />
+			</p:breadCrumb>
+			<p:dataTable var="marca" value="#{marcaBean.lista}" frame="box"
+				rules="all" widgetVar="marcas" cellpadding="3"
+				paginator="true"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} 
+				{NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,15,25">
+				<p:column headerText="Nome" filterBy="#{marca.nome}"
+					filterMatchMode="contains">
+					<h:outputText value="#{marca.nome}" />
+				</p:column>
+				<p:column headerText="Ativo" filterBy="#{marca.ativo}"
+					filterMatchMode="equals">
+					<f:facet name="filter">
+						<p:selectOneButton onchange="PF('marcas').filter()"
+							styleClass="custom-filter">
+							<f:converter converterId="javax.faces.Boolean" />
+							<f:selectItem itemLabel="+" itemValue="true" />
+							<f:selectItem itemLabel="-" itemValue="false" />
+						</p:selectOneButton>
+					</f:facet>
+					<h:outputText
+						value="#{marca.ativo == true ? 'Ativo' : 'Desativado'}" />
+				</p:column>
+				<p:column headerText="Alterar">
+					<p:commandButton action="#{marcaBean.alterar(marca)}"
+						value="Alterar" />
+				</p:column>
+				<p:column headerText="Excluir">
+					<p:commandButton action="#{marcaBean.excluir(produto)}"
+						onclick="if (!confirm('Confirma a exclusão da categoria?')) return false"
+						value="Excluir" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

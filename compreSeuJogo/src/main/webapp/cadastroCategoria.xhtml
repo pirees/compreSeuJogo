@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/WEB-INF/template/template.xhtml">
+	<ui:define name="tituloJanela">Categoria</ui:define>
+	<ui:define name="conteudo">
+		<h:form>
+			<h:inputHidden value="#{categoriaBean.categoria.id}" />
+			<p:growl id="messages" autoUpdate="true" life="3000" />
+			<div id="main" align="center">
+				<p:breadCrumb>
+					<p:menuitem value="Início" url="#" icon="pi pi-home" />
+					<p:menuitem value="Categorias" url="listaCategoria.xhtml?faces-redirect=true" />
+					<p:menuitem url="cadastroCategoria.xhtml?faces-redirect=true"
+						title="Adicionar" icon="pi pi-plus" />
+				</p:breadCrumb>
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="showcase-text-align-center">
+					<f:facet name="header">Categoria</f:facet>
+					<f:facet name="footer">
+						<div style="text-align:center;">
+							<p:commandButton update="@form,messages" value="Cancelar"
+								action="listaCategoria.xhtml?faces-redirect=true" />
+							<p:commandButton value="Salvar"
+								action="#{categoriaBean.salvar()}" update="@form,messages" />
+						</div>
+					</f:facet>
+					<p:outputLabel value="Nome" for="nome" />
+					<p:inputText id="nome" value="#{categoriaBean.categoria.nome}"
+						placeholder="Digite o nome da categoria" />
+					<p:outputLabel value="Ativo" for="ativo" />
+					<p:selectBooleanCheckbox id="ativo"
+						value="#{categoriaBean.categoria.ativo}" itemLabel="Ativo" />
+				</p:panelGrid>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

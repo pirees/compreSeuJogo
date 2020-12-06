@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<f:metadata>
+		<f:viewParam name="id" value="#{transporteBean.transporte.id}" />
+	</f:metadata>
+</h:head>
+<ui:composition template="/WEB-INF/template/template.xhtml">
+	<ui:define name="tituloJanela">Finalizar Compra - Compre Seu Jogo</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="form">
+			<p:panel style="min-height: 500px;">
+				<p:growl id="growl" showDetail="true" life="1000" />
+				<div class="ui-g">
+					<div style="float: center" class="ui-g-6">
+						<div style="text-align: center">
+							<p:dataTable var="transporte" value="#{transporteBean.lista}">
+								<p:column headerText="Nome">
+									<h:outputText value="#{transporte.nome}" />
+								</p:column>
+								<p:column headerText="Entrega">
+									<h:outputText value="#{transporte.dataEntrega} dias uteis" />
+								</p:column>
+							</p:dataTable>
+						</div>
+					</div>
+					<div class="ui-g-3">
+						<div style="text-align: center">
+							<p:panel>
+								<ul>
+									<li style="font-size: 1.2em; text-align: left;">TOTAL DA
+										VENDA: R$#{UsePessoaBean.cliente.carrinho.valor}</li>
+								</ul>
+							</p:panel>
+						</div>
+					</div>
+					<div style="float: rigt;" class="ui-g-3">
+						<p:panel>
+							<h:outputLabel value="Transportadora " for="transporte" />
+							<p:selectOneMenu id="transporte"
+								value="#{vendaBean.venda.transporte.id}">
+								<f:selectItem itemLabel="Selecione uma opção" itemValue=""
+									noSelectionOption="true" />
+								<f:selectItems var="transporte" value="#{vendaBean.transporte}"
+									itemLabel="#{transporte.nome}" itemValue="#{transporte.id}" />
+							</p:selectOneMenu>
+							<br></br>
+							<br></br>
+							<p:commandButton value="Finalizar Pedido" id="add"
+								style="margin-center:20px;" update="@form"
+								action="#{vendaBean.salvar(UsePessoaBean)}" />
+						</p:panel>
+					</div>
+				</div>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<h:outputStylesheet library="css" name="face.css" />
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+</h:head>
+<body>
+	<ui:composition>
+		<div id="header" style="padding: 200px, 10px">
+			<h:form>
+				<p:growl id="msg" />
+				<p:panelGrid columns="2" layout="grid">
+					<p:column>
+						<h:commandLink immediate="true" action="homeAdm.xhtml?faces-redirect=true">
+							<p:graphicImage style="width: 75px;height:75px;" library="imagem"
+								name="logoTe.png" />
+							<p:outputLabel style="padding: 20px 25px;font-size:1.6em;"
+								value="COMPRE SEU JOGO" />
+						</h:commandLink>
+					</p:column>
+					<p:column>
+						<p:menuButton icon="pi pi-user"
+							style="float:right;padding: 10px 5px;"
+							value="#{UsePessoaBean.vendedor.nome}">
+							<p:menuitem value="Finalizar sessão" icon="pi pi-sign-out"
+								action="#{UsePessoaBean.logout()}" immediate="true" />
+						</p:menuButton>
+					</p:column>
+				</p:panelGrid>
+				<p:menubar>
+					<p:submenu label="Gerência" icon="pi pi-cog">
+						<p:menuitem value="Categoria"
+							url="listaCategoria.xhtml?faces-redirect=true" />
+						<p:separator />
+						<p:menuitem value="Marca"
+							url="listaMarca.xhtml?faces-redirect=true" />
+						<p:separator />
+						<p:menuitem value="Plataforma"
+							url="listaPlataforma.xhtml?faces-redirect=true" />
+						<p:separator />
+						<p:menuitem value="Produto" immediate="true"
+							action="#{produtoBean.crud()}" />
+						<p:separator />
+					</p:submenu>
+					<p:submenu label="Parceiros" icon="pi pi-briefcase">
+						<p:menuitem value="Transportadora"
+							url="listaTransportadora.xhtml?faces-redirect=true" />
+						<p:separator />
+						<p:menuitem value="Fornecedor"
+							url="listaFornecedor.xhtml?faces-redirect=true" />
+					</p:submenu>
+					<p:submenu label="Venda" icon="pi pi-shopping-cart">
+						<p:menuitem onclick="PF('dlg').show();" value="Nova" />
+						<p:separator />
+						<p:menuitem immediate="true" 
+									value="Todas" 
+									url="comprasGeral.xhtml?faces-redirect=true" />/>
+						<p:separator />
+					</p:submenu>
+				</p:menubar>
+				<p:dialog header="Nova venda" widgetVar="dlg" resizable="false">
+					<h:panelGrid columns="1" cellpadding="5">
+						<p:outputLabel value="Digite o CPF do cliente para iniciar venda" />
+						<p:inputMask id="username" value="#{UsePessoaBean.cliente.cpf}"
+							mask="999.999.999-99" />
+						<f:facet name="footer">
+							<p:commandButton value="Acessar" update="@this"
+								action="#{UsePessoaBean.acessoVendedor()}" />
+						</f:facet>
+					</h:panelGrid>
+				</p:dialog>
+			</h:form>
+		</div>
+	</ui:composition>
+</body>
+</html>

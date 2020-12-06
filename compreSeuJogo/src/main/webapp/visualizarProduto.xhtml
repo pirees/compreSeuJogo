@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<f:metadata>
+		<f:viewParam name="id" value="#{produtoBean.produto.id}" />
+		<f:viewAction action="#{produtoBean.encontrar()}" />
+	</f:metadata>
+</h:head>
+<ui:composition template="/WEB-INF/template/template.xhtml">
+	<ui:define name="tituloJanela">#{produtoBean.produto.nome}</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="form">
+			<p:growl id="growl"  life="2000" />
+			<p:panel>
+				<div class="ui-g">
+					<div class="ui-g-3">
+						<p:graphicImage style="width: 200px;height: 250px;padding: 20px;"
+							library="imagem" name="#{produtoBean.produto.imagem}" />
+						<p:rating style="padding-left:78px;"
+							value="#{produtoBean.produto.nota}" readonly="true" />
+					</div>
+					<div style="float: center" class="ui-g-6">
+						<div style="text-align: center">
+							<p:panel>
+								<h1>#{produtoBean.produto.nome}</h1>
+								<ul>
+									<li style="font-size: 1.2em; text-align: left;">Preço: R$
+										#{produtoBean.produto.valor}</li>
+									<li style="font-size: 1.2em; text-align: left;">Plataforma:
+										#{produtoBean.produto.plataforma.nome}</li>
+									<li style="font-size: 1.2em; text-align: left;">Categoria:
+										#{produtoBean.produto.categoria.nome}</li>
+									<li style="font-size: 1.2em; text-align: left;">Marca:
+										#{produtoBean.produto.marca.nome}</li>
+									<li style="font-size: 1.2em; text-align: left;">Descrição:
+										#{produtoBean.produto.descricao}</li>
+								</ul>
+							</p:panel>
+						</div>
+					</div>
+					<div style="float: right;" class="ui-g-3">
+						<p:panel>
+							<h:outputLabel value="Quantidade " for="spi" />
+							<p:spinner id="spi" size="1" min="0"
+								max="#{produtoBean.produto.quantEstoque}"
+								value="#{itemCarrinhoBean.item.quantidade}" />
+							<br />
+							<br />
+							<p:commandButton value="Adicionar ao Carrinho"
+								style="margin-center:20px;"
+								action="#{itemCarrinhoBean.adicionarItem(produtoBean.produto, UsePessoaBean)}"
+								update="@form:growl" />
+							<br />
+							<br />
+							<p:commandButton value="Avaliação" style="margin-center:20px;"
+								action="#{avaliacaoBean.avaliar(produtoBean.produto)}"
+								update="@form:growl" />
+						</p:panel>
+					</div>
+
+				</div>
+			</p:panel>
+		</h:form>
+		<h:form id="form2">
+			<p:dataList
+				rendered="#{avaliacaoBean.listaAvaliacao(produtoBean.produto).size() > 0}"
+				value="#{avaliacaoBean.listaAvaliacao(produtoBean.produto)}"
+				var="ava">
+				<p:accordionPanel dynamic="false" multiple="true">
+					<p:tab
+						title="#{ava.cliente.nome} #{ava.cliente.sobrenome} - #{ava.titulo}">
+						<h:panelGrid columns="1">
+							<p:rating style="padding-bottom:0px;" value="#{ava.pontos}"
+								readonly="true" />
+							<h:outputText value="#{ava.descricao}" />
+						</h:panelGrid>
+					</p:tab>
+				</p:accordionPanel>
+			</p:dataList>
+		</h:form>
+		<h:form id="form3">
+			<p:carousel value="#{produtoBean.carouselVP()}"
+				headerText="Talvez você também goste"
+				rendered="#{produtoBean.carouselVP().size() > 0}" var="produto"
+				itemStyle="text-align:center" responsive="true">
+				<p:panelGrid columns="1" style="width:100%;margin:10px 0px"
+					columnClasses="label,value" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<f:facet name="header">
+						<h:commandLink action="#{produtoBean.selecionar(produto)}"
+							update="@form">
+							<p:graphicImage style="widht:200px;height:200px;"
+								library="imagem" name="#{produto.imagem}" />
+						</h:commandLink>
+					</f:facet>
+					<h:outputText value="Preço: R$#{produto.valor}" />
+				</p:panelGrid>
+			</p:carousel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

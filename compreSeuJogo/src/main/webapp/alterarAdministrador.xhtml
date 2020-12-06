@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/WEB-INF/template/template.xhtml">
+	<ui:define name="tituloJanela">Alterar administrador</ui:define>
+	<ui:define name="conteudo">
+		<p:panel header="ALTERAR ADMINISTRADORES">
+			<h:form id="form1">
+				<p:breadCrumb>
+					<p:menuitem value="Início" url="#" icon="pi pi-home" />
+					<p:menuitem value="Administradores"
+						url="listaAdministrador.xhtml?faces-redirect=true" />
+					<p:menuitem url="cadastroAdministrador.xhtml?faces-redirect=true"
+						title="Adicionar" icon="pi pi-plus" />
+				</p:breadCrumb>
+				<p:growl id="msgs" autoUpdate="true" life="3000" />
+				<h:inputHidden value="#{administradorBean.administrador.id}" />
+				<h:inputHidden
+					value="#{administradorBean.administrador.dataCadastro}" />
+				<div align="center">
+					<p:panel header="Dados Pessoais">
+						<h2 align="center">Alterar Administrador</h2>
+						<h:panelGrid id="teste" columns="4" cellpadding="8"
+							style="margin:100px">
+
+							<p:outputLabel value="Nome" />
+							<p:inputText id="nome"
+								value="#{administradorBean.administrador.nome}" required="true"
+								requiredMessage="O campo nome é obrigatório" />
+
+							<p:outputLabel value="Sobrenome" />
+							<p:inputText id="sobrenome"
+								value="#{administradorBean.administrador.sobrenome}"
+								required="true"
+								requiredMessage="O campo sobrenome é obrigatório" />
+
+							<p:outputLabel value="CPF" />
+							<p:inputMask id="cpf"
+								value="#{administradorBean.administrador.cpf}"
+								mask="999.999.999-99" required="true"
+								requiredMessage="O campo CPF é obrigatório" />
+
+							<p:outputLabel value="Telefone" />
+							<p:inputMask id="telefone"
+								value="#{administradorBean.administrador.telefone}"
+								mask="(99)99999-9999" required="true"
+								requiredMessage="O campo telefone é obrigatório" />
+
+							<p:outputLabel value="Data de Nascimento" />
+							<p:calendar id="mask"
+								value="#{administradorBean.administrador.dataNascimento}"
+								pattern="dd-MM-yyyy" mask="true" required="true"
+								requiredMessage="O campo data de nascimento é obrigatório" />
+
+							<p:outputLabel value="CEP" />
+							<p:inputMask id="cep"
+								value="#{administradorBean.administrador.cep}" mask="99999-999"
+								required="true" requiredMessage="O campo CEP é obrigatório" />
+
+							<p:outputLabel for="address" value="Endereço" />
+							<p:inputText id="address" rows="1"
+								value="#{administradorBean.administrador.endereco}"
+								required="true" requiredMessage="O campo endereço é obrigatório" />
+
+							<p:outputLabel for="city" value="Cidade" />
+							<p:inputText id="city"
+								value="#{administradorBean.administrador.cidade}"
+								required="true" requiredMessage="O campo cidade é obrigatório" />
+
+							<p:outputLabel for="bairro" value="Bairro" />
+							<p:inputText id="bairro"
+								value="#{administradorBean.administrador.bairro}"
+								required="true" requiredMessage="O campo bairro é obrigatório" />
+
+							<p:outputLabel for="state" value="Estado" />
+							<p:selectOneMenu id="state"
+								value="#{administradorBean.administrador.estado}"
+								unselectable="true">
+								<f:selectItem itemLabel="---------" />
+								<f:selectItems value="#{administradorBean.estado}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="email" value="Email" />
+							<p:inputText id="email"
+								value="#{administradorBean.administrador.email}" required="true"
+								requiredMessage="O campo e-mail é obrigatório" />
+
+
+							<p:outputLabel value="Sexo" />
+							<p:selectOneMenu id="console"
+								value="#{administradorBean.administrador.sexo}"
+								unselectable="true">
+								<f:selectItem itemLabel="-------" />
+								<f:selectItems value="#{administradorBean.sexo}" />
+							</p:selectOneMenu>
+
+							<p:selectBooleanCheckbox
+								value="#{administradorBean.administrador.ativo}"
+								itemLabel="Ativo" />
+
+							<p:dialog header="Values" modal="true" resizable="false"
+								showEffect="fade" widgetVar="dlg">
+								<h:panelGrid columns="1" id="display">
+									<h:outputText
+										value="Value 1: #{administradorBean.administrador.ativo}" />
+								</h:panelGrid>
+							</p:dialog>
+							<p:commandButton value="Salvar" id="salvar"
+								action="#{administradorBean.atualizarStauts}" update="@form" />
+
+						</h:panelGrid>
+					</p:panel>
+				</div>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

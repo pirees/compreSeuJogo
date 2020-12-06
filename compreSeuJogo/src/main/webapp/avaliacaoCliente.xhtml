@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<f:metadata>
+		<f:viewParam name="id" value="#{produtoBean.produto.id}" />
+		<f:viewAction action="#{produtoBean.encontrar()}" />
+	</f:metadata>
+</h:head>
+<ui:composition template="/WEB-INF/template/template.xhtml">
+	<ui:define name="tituloJanela">Avaliação - Compre Seu Jogo</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="form">
+			<div style="float: center;">	
+				<p:panel>
+					<h2 style="text-align: center">Avalie agora mesmo o nosso produto</h2>
+					<div class="ui-g">
+						<div class="ui-g-3">
+							<p:graphicImage style="width: 200px;height: 250px;padding: 20px;"
+											library="imagem" name="#{produtoBean.produto.imagem}" />
+						</div>		
+						<div style="float: center;" class="ui-g-6">
+							<p:panel>
+								<h:outputLabel value="Título"/>
+								<br></br>
+									<p:inputTextarea id="titulo" rows="1"
+									         		 value="#{avaliacaoBean.avaliacao.titulo}"
+											 	   	 required="true" 
+											 		 requiredMessage="O campo é obrigatório" />
+								<br></br>
+								<br></br>			 		 
+															
+								<h:outputLabel value="Descrição"/>
+								<br></br>
+									<p:inputTextarea id="descricao"
+								        		     value="#{avaliacaoBean.avaliacao.descricao}" rows="4" cols="45"
+								                	 required="true" />
+								<br></br>
+								<br></br>	
+								
+					        	<h:outputLabel value="Pontos"/>
+					        	<br></br>
+									<p:rating  id="estrela"
+								        	   value="#{avaliacaoBean.avaliacao.pontos}"/>
+						          <br></br>
+								<p:commandButton value="Salvar" id="salvar"
+										         action="#{avaliacaoBean.salvar(UsePessoaBean.cliente, produtoBean.produto)}" 
+												 update="@form" >
+								</p:commandButton>								
+				 			</p:panel>
+						</div>			
+					</div>
+				</p:panel>
+			</div>	
+		</h:form>																																					
+	</ui:define>
+</ui:composition>
+</html>

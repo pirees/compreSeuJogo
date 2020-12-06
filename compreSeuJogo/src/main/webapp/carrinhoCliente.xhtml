@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+</h:head>
+<ui:composition template="/WEB-INF/template/template.xhtml">
+	<ui:define name="tituloJanela">Carrinho</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="form">
+			<p:growl id="msg" autoUpdate="true"  life="500" />
+			<h:panelGroup
+				rendered="#{UsePessoaBean.cliente.carrinho.item.size() > 0}">
+				<p:panel>
+					<h:panelGroup rendered="#{UsePessoaBean.logadoVendedor == false}">
+						<p:commandButton style="float: right;"
+							action="finalizarCompra.xhtml?faces-redirect=true"
+							value="Finalizar compra" update="@form" />
+					</h:panelGroup>
+					<h:panelGroup rendered="#{UsePessoaBean.logadoVendedor == true}">
+						<p:commandButton style="float: right;"
+							action="#{vendaBean.salvarVendedor(UsePessoaBean)}"
+							value="Finalizar compra" update="@form" />
+					</h:panelGroup>
+					<p style="font-size: 1.2em;">Total:
+						#{UsePessoaBean.cliente.carrinho.valor}</p>
+					<p style="font-size: 1.2em;">Itens:
+						#{UsePessoaBean.cliente.carrinho.item.size()}</p>
+				</p:panel>
+				<p:dataView var="item"
+					value="#{UsePessoaBean.cliente.carrinho.item}"
+					gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+					<p:dataViewGridItem columns="4">
+						<p:panel header="#{item.produto.nome}" style="text-align:center">
+							<h:panelGrid columns="1" style="width:100%;text-align:center;">
+								<p:graphicImage styleClass="image"
+									style="width: 200px;height: 250px;" library="imagem"
+									name="#{item.produto.imagem}" />
+								<p:rating value="#{item.produto.nota}" readonly="true" />
+								<h:outputText style="text-align: left;"
+									value="Categoria: #{item.produto.categoria.nome}" />
+								<h:outputText style="text-align: left;"
+									value="Plataforma: #{item.produto.plataforma.nome}" />
+								<h:outputText rendered="#{item.quantidade == 1}"
+									value="Subtotal
+													(#{item.quantidade} item): R$#{item.valor}" />
+								<h:outputText rendered="#{item.quantidade > 1}"
+									value="Subtotal
+													(#{item.quantidade} itens): R$#{item.valor}" />
+								<p:commandButton value="Remover do Carrinho" id="ex"
+									style="margin-center:20px;" update="@form"
+									action="#{itemCarrinhoBean.removerItem(item)}">
+									<p:collector value="#{item}"
+										removeFrom="#{UsePessoaBean.cliente.carrinho.item}"
+										unique="true" />
+								</p:commandButton>
+							</h:panelGrid>
+						</p:panel>
+					</p:dataViewGridItem>
+					<p:dataViewListItem>
+						<p:panel>
+							<div class="ui-g">
+								<div class="ui-g-3">
+									<p:graphicImage
+										style="width: 200px;height: 250px;padding: 20px;"
+										library="imagem" name="#{item.produto.imagem}" />
+
+									<p:rating value="#{item.produto.nota}"
+										style="text-align:center;" readonly="true" />
+								</div>
+								<div style="float: center" class="ui-g-6">
+									<div style="text-align: center">
+										<p:panel>
+											<h1>#{item.produto.nome}</h1>
+											<ul>
+												<li style="font-size: 1.2em; text-align: left;">Preço
+													unitário: R$#{item.produto.valor}</li>
+												<li style="font-size: 1.2em; text-align: left;">Categoria:
+													#{item.produto.categoria.nome}</li>
+												<li style="font-size: 1.2em; text-align: left;">Plataforma:
+													#{item.produto.plataforma.nome}</li>
+												<li style="font-size: 1.2em; text-align: left;">Marca:
+													#{item.produto.marca.nome}</li>
+												<li style="font-size: 1.2em; text-align: left;">Descrição:
+													#{item.produto.descricao}</li>
+												<li style="font-size: 1.2em; text-align: left;"><h:outputText
+														rendered="#{item.quantidade == 1}"
+														value="Subtotal
+													(#{item.quantidade} item): R$#{item.valor}" />
+													<h:outputText rendered="#{item.quantidade > 1}"
+														value="Subtotal
+													(#{item.quantidade} itens): R$#{item.valor}" /></li>
+											</ul>
+										</p:panel>
+									</div>
+								</div>
+								<div style="float: right;" class="ui-g-3">
+									<p:commandButton value="Remover do Carrinho"
+										style="margin-center:20px;" update="@form"
+										action="#{itemCarrinhoBean.removerItem(item)}">
+										<p:collector value="#{item}"
+											removeFrom="#{UsePessoaBean.cliente.carrinho.item}"
+											unique="true" />
+									</p:commandButton>
+									<br /> <br />
+									<p:commandButton value="Ver produto"
+										style="margin-center:20px;"
+										action="#{produtoBean.selecionar(item.produto)}"
+										update=":form" />
+								</div>
+							</div>
+						</p:panel>
+					</p:dataViewListItem>
+				</p:dataView>
+			</h:panelGroup>
+			<h:panelGroup
+				rendered="#{UsePessoaBean.cliente.carrinho.item.size() == 0}">
+				<p:panel style="min-height: 500px;">
+					<h2>Desculpe mas seu carrinho está vazio</h2>
+				</p:panel>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
